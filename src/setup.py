@@ -18,7 +18,7 @@ setup(
     ],
     description='Framework for writing munin plugins.',
     extras_require={
-        'test': ['fixtures'],
+        'test': ['fixtures2'],
     },
     install_requires=[
         'inflection',
