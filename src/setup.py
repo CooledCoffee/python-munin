@@ -26,5 +26,5 @@ setup(
     packages=[
         'munin',
     ],
-    url='https://github.com/CooledCoffee/munin/',
+    url='https://github.com/CooledCoffee/python-munin/',
 )
