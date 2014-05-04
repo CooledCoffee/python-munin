@@ -3,8 +3,11 @@ Installation
 
 pip install python-munin
 
-Example
-=======
+Examples
+========
+
+Static Fields
+-------------
 
 	from munin import Plugin, Field
 	
@@ -27,6 +30,36 @@ Example
 	            'load15': load15,
 	        }
 	        
+	LoadPlugin().main()
+	
+Dynamic Fields
+--------------
+
+	from munin import Plugin, Field
+	import os
+	
+	class CpuFreqPlugin(Plugin):
+	    category = 'system'
+	    vlabel = 'load'
+	    
+	    @property
+	    def fields(self):
+	        files = os.listdir('/sys/devices/system/cpu')
+	        cpus = [f for f in files if f.startswith('cpu') and f[3:].isdigit()]
+	        return [Field(c) for c in cpus]
+	    
+	    def values(self):
+	        values = {}
+	        for field in self.fields:
+	            cpu = field.name
+	            path = os.path.join('/sys/devices/system/cpu', cpu, 'cpufreq', 'cpuinfo_cur_freq')
+	            with open(path) as f:
+	                freq = int(f.read())
+	            values[cpu] = freq
+	        return values
+	        
+	CpuFreqPlugin().main()
+
 Author
 ======
 
