@@ -41,23 +41,26 @@ Dynamic Fields
 	class CpuFreqPlugin(Plugin):
 	    category = 'system'
 	    vlabel = 'load'
-	    
+	
 	    @property
 	    def fields(self):
-	        files = os.listdir('/sys/devices/system/cpu')
-	        cpus = [f for f in files if f.startswith('cpu') and f[3:].isdigit()]
+	        cpus = _list_cpus()
 	        return [Field(c) for c in cpus]
-	    
+	
 	    def values(self):
 	        values = {}
-	        for field in self.fields:
-	            cpu = field.name
+	        cpus = _list_cpus()
+	        for cpu in cpus:
 	            path = os.path.join('/sys/devices/system/cpu', cpu, 'cpufreq', 'cpuinfo_cur_freq')
 	            with open(path) as f:
 	                freq = int(f.read())
 	            values[cpu] = freq
 	        return values
-	        
+	
+	def _list_cpus():
+	    files = os.listdir('/sys/devices/system/cpu')
+	    return [f for f in files if f.startswith('cpu') and f[3:].isdigit()]
+	
 	CpuFreqPlugin().main()
 
 Author
