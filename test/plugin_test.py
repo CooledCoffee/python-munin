@@ -78,7 +78,7 @@ class ExecuteTest(TestCase):
                 return {'a': 1, 'b': 2}
         plugin = TestPlugin()
         plugin.execute()
-        self.assertEqual('''a.value 1
-b.value 2
+        self.assertEqual('''a.value 1.000
+b.value 2.000
 ''', self.streams.stdout)
         

@@ -28,7 +28,7 @@ class Plugin(object):
     
     def execute(self):
         values = self.values()
-        lines = ['%s.value %s' % (k, v) for k, v in values.items()]
+        lines = ['%s.value %0.3f' % (k, v) for k, v in values.items()]
         lines.sort()
         print('\n'.join(lines))
     
