@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import inflection
+import inspect
 import os
 import six
 import sys
@@ -31,7 +32,13 @@ class Plugin(object):
     
     def execute(self):
         values = self.values()
-        lines = ['%s.value %0.3f' % (k, v) for k, v in values.items()]
+        if isinstance(values, dict):
+            values = values.items()
+        elif hasattr(values, '__iter__'):
+            values = list(values)
+        else:
+            raise Exception('Values type "%s" is not supported.' % type(values).__name__)
+        lines = ['%s.value %0.3f' % (k, v) for k, v in values]
         lines.sort()
         print('\n'.join(lines))
     

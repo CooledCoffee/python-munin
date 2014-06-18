@@ -85,7 +85,7 @@ b.label b
 ''', self.streams.stdout)
         
 class ExecuteTest(TestCase):
-    def test(self):
+    def test_dict(self):
         self.streams = self.useFixture(StreamsFixture())
         class TestPlugin(Plugin):
             def values(self):
@@ -96,3 +96,29 @@ class ExecuteTest(TestCase):
 b.value 2.000
 ''', self.streams.stdout)
         
+    def test_list(self):
+        self.streams = self.useFixture(StreamsFixture())
+        class TestPlugin(Plugin):
+            def values(self):
+                return [
+                    ('a', 1),
+                    ('b', 2),
+                ]
+        plugin = TestPlugin()
+        plugin.execute()
+        self.assertEqual('''a.value 1.000
+b.value 2.000
+''', self.streams.stdout)
+        
+    def test_generator(self):
+        self.streams = self.useFixture(StreamsFixture())
+        class TestPlugin(Plugin):
+            def values(self):
+                yield 'a', 1
+                yield 'b', 2
+        plugin = TestPlugin()
+        plugin.execute()
+        self.assertEqual('''a.value 1.000
+b.value 2.000
+''', self.streams.stdout)
+    
