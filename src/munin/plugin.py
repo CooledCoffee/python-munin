@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import inflection
 import os
+import six
 import sys
 
 class Plugin(object):
@@ -24,6 +25,8 @@ class Plugin(object):
         print('graph_category ' + self.category)
         print('graph_vlabel ' + self.vlabel)
         for field in self.fields:
+            if isinstance(field, six.string_types):
+                field = Field(field)
             field.config()
     
     def execute(self):

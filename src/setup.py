@@ -22,6 +22,7 @@ setup(
     },
     install_requires=[
         'inflection',
+        'six',
     ],
     packages=[
         'munin',

@@ -28,6 +28,20 @@ class ConfigTest(TestCase):
         self.streams = self.useFixture(StreamsFixture())
         self.useFixture(MonkeyPatch('sys.argv', ['/etc/munin/plugins/test_plugin']))
         
+    def test_simple(self):
+        class TestPlugin(Plugin):
+            category = 'category1'
+            vlabel = '%'
+            fields = ['a', 'b']
+        plugin = TestPlugin()
+        plugin.config()
+        self.assertMultiLineEqual('''graph_title Test Plugin
+graph_category category1
+graph_vlabel %
+a.label a
+b.label b
+''', self.streams.stdout)
+        
     def test_static(self):
         class TestPlugin(Plugin):
             category = 'category1'
