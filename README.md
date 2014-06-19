@@ -6,8 +6,34 @@ pip install python-munin
 Examples
 ========
 
-Static Fields
--------------
+First Plugin
+------------
+
+	from munin import Plugin
+	
+	class LoadPlugin(Plugin):
+	    category = 'system'
+	    fields = [
+	        'load1',
+	        'load5',
+	        'load15',
+	    ]
+	    vlabel = 'load'
+	    
+	    def values(self):
+	        with open('/proc/loadavg') as f:
+	            data = f.read()
+	        load1, load5, load15 = [float(s) for s in data.split()[:3]]
+	        return {
+	            'load1': load1,
+	            'load5': load5,
+	            'load15': load15,
+	        }
+	        
+	LoadPlugin().main()
+
+Setting Thresholds
+------------------
 
 	from munin import Plugin, Field
 	
@@ -48,14 +74,12 @@ Dynamic Fields
 	        return [Field(c) for c in cpus]
 	
 	    def values(self):
-	        values = {}
 	        cpus = _list_cpus()
 	        for cpu in cpus:
 	            path = os.path.join('/sys/devices/system/cpu', cpu, 'cpufreq', 'cpuinfo_cur_freq')
 	            with open(path) as f:
 	                freq = int(f.read())
-	            values[cpu] = freq
-	        return values
+	            yield cpu, freq
 	
 	def _list_cpus():
 	    files = os.listdir('/sys/devices/system/cpu')
