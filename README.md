@@ -70,20 +70,15 @@ Dynamic Fields
 	
 	    @property
 	    def fields(self):
-	        cpus = _list_cpus()
-	        return [Field(c) for c in cpus]
+	        files = os.listdir('/sys/devices/system/cpu')
+	        return [f for f in files if f.startswith('cpu') and f[3:].isdigit()]
 	
 	    def values(self):
-	        cpus = _list_cpus()
-	        for cpu in cpus:
+	        for cpu in self.fields:
 	            path = os.path.join('/sys/devices/system/cpu', cpu, 'cpufreq', 'cpuinfo_cur_freq')
 	            with open(path) as f:
 	                freq = int(f.read())
 	            yield cpu, freq
-	
-	def _list_cpus():
-	    files = os.listdir('/sys/devices/system/cpu')
-	    return [f for f in files if f.startswith('cpu') and f[3:].isdigit()]
 	
 	CpuFreqPlugin().main()
 
