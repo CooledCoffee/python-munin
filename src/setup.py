@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
+import setuptools
 
 setup(
     name='python-munin',
@@ -24,8 +25,7 @@ setup(
         'inflection',
         'six',
     ],
-    packages=[
-        'munin',
-    ],
+    package_dir={'': 'src'},
+    packages=setuptools.find_packages(where='src'),
     url='https://github.com/CooledCoffee/python-munin/',
 )
