@@ -26,6 +26,6 @@ setup(
         'six',
     ],
     package_dir={'': 'src'},
-    packages=setuptools.find_packages(where='src'),
+    py_modules=['munin'],
     url='https://github.com/CooledCoffee/python-munin/',
 )
