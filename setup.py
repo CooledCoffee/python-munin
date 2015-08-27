@@ -4,7 +4,7 @@ import setuptools
 
 setup(
     name='python-munin',
-    version='0.3.0',
+    version='0.3.1',
     author='Mengchen LEE',
     author_email='CooledCoffee@gmail.com',
     classifiers = [
@@ -27,5 +27,5 @@ setup(
     ],
     package_dir={'': 'src'},
     py_modules=['munin'],
-    url='https://github.com/CooledCoffee/python-munin/',
+    url='https://package-insights.appspot.com/packages/python-munin'
 )
