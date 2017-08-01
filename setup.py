@@ -27,5 +27,5 @@ setup(
     ],
     package_dir={'': 'src'},
     py_modules=['munin'],
-    url='https://github.com/CooledCoffee/python-munin/',
+    url='https://github.com/cooledcoffee/python-munin',
 )
