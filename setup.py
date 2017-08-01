@@ -4,7 +4,7 @@ import setuptools
 
 setup(
     name='python-munin',
-    version='0.3.0',
+    version='0.3.1',
     author='Mengchen LEE',
     author_email='CooledCoffee@gmail.com',
     classifiers = [
