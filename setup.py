@@ -4,9 +4,8 @@ import setuptools
 
 setup(
     name='python-munin',
-    version='0.3.1',
+    version='0.3.2',
     author='Mengchen LEE',
-    author_email='CooledCoffee@gmail.com',
     classifiers = [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
